@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planty — Твой онлайн сад</title>
+    <script src="backend.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="backend.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">PLANTY</div>
+    <nav>
+        <a href="#">Главная</a>
+        <a href="#">Каталог</a>
+        <a href="#">Уход</a>
+        <a href="#">Контакты</a>
+    </nav>
+    <button class="btn" style="padding: 10px 20px;">Корзина (0)</button>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Создай свой <br> идеальный уют</h1>
+        <p>Экзотические растения с доставкой до двери. Сделайте ваш дом живым и зеленым уже сегодня.</p>
+        <br>
+        <a href="#shop" class="btn">Выбрать растение</a>
+    </div>
+    <div class="hero-image">
+        <div class="arch-container">
+            <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&w=1000&q=80" alt="Hero Plant">
+        </div>
+    </div>
+</section>
+
+<div class="deal-box">
+    <div>
+        <h2>Акция дня!</h2>
+        <p>Успей купить редкие суккуленты со скидкой 30%</p>
+    </div>
+    <div class="timer">
+        <div class="time-item"><span id="days">00</span>дней</div>
+        <div class="time-item"><span id="hours">00</span>часов</div>
+        <div class="time-item"><span id="mins">00</span>мин</div>
+    </div>
+</div>
+
+<section class="shop-container" id="shop">
+    <h2>Наш каталог</h2>
+    <div class="product-grid">
+
+        <div class="product-card" onclick="openPlant('Монстера Деликатесная', '13800 тг')">
+            <div class="img-container">
+                <img src="monstera.png" alt="Монстера">
+            </div>
+            <h3>Монстера Деликатесная</h3>
+            <p class="price">13800 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Фикус Лирата', '20200 тг')">
+            <div class="img-container">
+                <img src="fikus.png" alt="Фикус">
+            </div>
+            <h3>Фикус Лирата</h3>
+            <p class="price">20200 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Стрелиция Николай', '21600 тг')">
+            <div class="img-container">
+                <img src="strelicia.png" alt="Стрелиция">
+            </div>
+            <h3>Стрелиция</h3>
+            <p class="price">21600 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Замиокулькас', '11500 тг')">
+            <div class="img-container">
+                <img src="zamiokulkas.png" alt="Замиокулькас">
+            </div>
+            <h3>Замиокулькас</h3>
+            <p class="price">11500 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Калатея Медальон', '13800 тг')">
+            <div class="img-container">
+                <img src="kaloteya.png" alt="Калатея">
+            </div>
+            <h3>Калатея Медальон</h3>
+            <p class="price">13800 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Сансевиерия Зебра', '7699 тг')">
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=500&q=80" alt="Сансевиерия">
+            </div>
+            <h3>Сансевиерия Зебра</h3>
+            <p class="price">7699 тг</p>
+        </div>
+
+    </div>
+</section>
+
+<div id="plantModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="m-name">Название</h2>
+        <p style="margin: 15px 0; color: var(--text-gray);">
+            Прекрасный выбор для вашего интерьера. Это растение очищает воздух и радует глаз своей зеленью.
+        </p>
+        <p id="m-price" class="price" style="font-size: 28px; display: block; margin-bottom: 20px;"></p>
+        <button class="btn" onclick="addToCart()">Добавить в корзину</button>
+    </div>
+</div>
+
+<footer>
+    <div>
+        <h3>PLANTY</h3>
+        <p>Превращаем квартиры в джунгли с 2026 года.</p>
+    </div>
+    <div>
+        <h4>Навигация</h4>
+        <p>О нас<br>Доставка<br>Возврат</p>
+    </div>
+    <div>
+        <h4>Связь</h4>
+        <p>Алматы, Азат 15<br> gabidenovali@gmail.com</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+:root {
+    --dark-green: #2D5341;
+    --light-green: #E9F0E9;
+    --accent-green: #D4E2D4;
+    --text-main: #333333;
+    --text-gray: #757575;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(180deg, #f3f8f3 0%, #e6f2e6 100%);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-green);
+    cursor: pointer;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+nav a:hover { color: var(--dark-green); }
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 8%;
+    background-color: #fafafa;
+}
+
+.hero-content { flex: 1; }
+
+.hero-content h1 {
+    font-size: 58px;
+    color: var(--dark-green);
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.arch-container {
+    width: 400px;
+    height: 500px;
+    background: var(--accent-green);
+    border-radius: 200px 200px 0 0;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.arch-container img {
+    width: 100%;
+    transition: var(--transition);
+}
+
+.arch-container:hover img {
+    transform: scale(1.05);
+}
+
+.deal-box {
+    background: var(--light-green);
+    padding: 40px;
+    border-radius: 20px;
+    margin: 40px 8%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.timer {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.time-item {
+    background: var(--dark-green);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 70px;
+}
+
+.time-item span {
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.shop-container {
+    padding: 60px 8%;
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.product-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    transition: var(--transition);
+    cursor: pointer;
+    text-align: left;
+}
+
+.product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.img-container {
+    background: var(--accent-green);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 12px;
+    background: var(--accent-green);
+    border-radius: 15px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark-green);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 50px;
+    border-radius: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.btn {
+    background: var(--dark-green);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+footer {
+    background: var(--dark-green);
+    color: white;
+    padding: 60px 8%;
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
