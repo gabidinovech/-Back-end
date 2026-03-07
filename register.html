@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>Тіркелу</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+        }
+        .auth-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background-color: #218838; }
+        .toggle-link {
+            text-align: center;
+            margin-top: 15px;
+            display: block;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .toggle-link b { color: #28a745; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <h2>Жүйеге тіркелу</h2>
+    <form id="regForm">
+        <input type="text" id="username" placeholder="Атыңыз" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Құпия сөз" required>
+        <button type="submit">Тіркелу</button>
+    </form>
+    <a href="login.html" class="toggle-link">Аккаунтыңыз бар ма? <b>Кіру</b></a>
+</div>
+
+<script>
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const data = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+
+        try {
+            // Серверге сұраныс жіберу
+            const response = await fetch('http://localhost:3000/api/register', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert("Тіркелу сәтті өтті! 🌿");
+                // Деректерді сақтау
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('userEmail', data.email); 
+                
+                // Басты бетке өту
+                window.location.href = 'index.html';
+            } else {
+                alert(result.message || "Қате кетті");
+            }
+        } catch (error) {
+            console.error("Қате:", error);
+            alert("Сервермен байланыс жоқ! Сервер (node server.js) қосулы екенін тексеріңіз.");
+        }
+    });
+</script>
+
+</body>
+</html>

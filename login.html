@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жүйеге кіру - Planty</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f4f7f6; 
+        }
+        .auth-card { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 350px; 
+            text-align: center; 
+        }
+        h2 { color: #2d3436; margin-bottom: 25px; }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #dfe6e9; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 14px; 
+            outline: none; 
+            transition: 0.3s; 
+        }
+        input:focus { 
+            border-color: #00b894; 
+            box-shadow: 0 0 5px rgba(0,184,148,0.2); 
+        }
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background-color: #00b894; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+            transition: 0.3s; 
+        }
+        button:hover { background-color: #00947a; }
+        .toggle-link { 
+            margin-top: 20px; 
+            display: block; 
+            color: #636e72; 
+            text-decoration: none; 
+            font-size: 14px; 
+        }
+        .toggle-link b { color: #00b894; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <h2>Қош келдіңіз!</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Электрондық пошта" required>
+        <input type="password" id="password" placeholder="Құпия сөз" required>
+        <button type="submit">Кіру</button>
+    </form>
+    <a href="register.html" class="toggle-link">Аккаунтыңыз жоқ па? <b>Тіркелу</b></a>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const emailInput = document.getElementById('email').value;
+        const passwordInput = document.getElementById('password').value;
+
+        try {
+            // Сервердің толық адресін (port 3000) және /api/ жолын көрсетеміз
+            const response = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: emailInput,
+                    password: passwordInput
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Мәліметтерді браузер жадына сақтау (Себет үшін маңызды)
+                localStorage.setItem('userEmail', emailInput); 
+                localStorage.setItem('username', result.username || 'Пайдаланушы');
+                
+                alert("Жүйеге сәтті кірдіңіз! ✅");
+                
+                // Басты бетке өту
+                window.location.href = 'index.html'; 
+            } else {
+                // Серверден келген қатені көрсету (мысалы: "Email немесе құпия сөз қате")
+                alert(result.message || "Қате: Мәліметтер дұрыс емес!");
+            }
+        } catch (error) {
+            console.error("Сервермен байланыс қатесі:", error);
+            alert("Сервермен байланыс жоқ! node server.js қосулы екенін тексеріңіз.");
+        }
+    });
+</script>
+
+</body>
+</html>
