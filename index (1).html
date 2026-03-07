@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planty — Твой онлайн сад</title>
+    <script src="backend.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="backend.css">
+</head>
+<body>
+    <script>
+    // Тексеру: егер қолданушы тіркелмеген болса, тіркелу бетіне жіберу
+    if (!localStorage.getItem('username')) {
+        window.location.href = 'register.html';
+    }
+    </script>
+
+<header>
+    <div id="auth-section" style="padding: 15px 0; display: flex; justify-content: flex-start;"></div>
+    <div class="logo">PLANTY</div>
+    <nav>
+        <a href="#">Главная</a>
+        <a href="#shop">Каталог</a>
+        <a href="#">Уход</a>
+        <a href="#">Контакты</a>
+    </nav>
+    <a href="cart.html" id="cartCount" class="btn" style="padding: 10px 20px; text-decoration: none; display: inline-block;">
+    Корзина (0)
+    </a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Создай свой <br> идеальный уют</h1>
+        <p>Экзотические растения с доставкой до двери. Сделайте ваш дом живым и зеленым уже сегодня.</p>
+        <br>
+        <a href="#shop" class="btn">Выбрать растение</a>
+    </div>
+    <div class="hero-image">
+        <div class="arch-container">
+            <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?auto=format&fit=crop&w=1000&q=80" alt="Hero Plant">
+        </div>
+    </div>
+</section>
+
+<div class="deal-box">
+    <div>
+        <h2>Акция дня!</h2>
+        <p>Успей купить редкие суккуленты со скидкой 30%</p>
+    </div>
+    <div class="timer">
+        <div class="time-item"><span id="days">00</span>дней</div>
+        <div class="time-item"><span id="hours">00</span>часов</div>
+        <div class="time-item"><span id="mins">00</span>мин</div>
+    </div>
+</div>
+
+<section class="shop-container" id="shop">
+    <h2>Наш каталог</h2>
+
+    <div style="text-align: center; margin-bottom: 40px;">
+        <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Поиск растений (например: Монстера)..." 
+        style="
+            width: 100%;
+            max-width: 450px;
+            padding: 12px 25px;
+            border: 2px solid #3e5c4a;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        ">
+    </div>
+
+    <div class="product-grid" id="productGrid">
+        <div class="product-card" onclick="openPlant('Монстера Деликатесная', '13800 тг', 1)">
+            <div class="img-container"><img src="monstera.png" alt="Монстера"></div>
+            <h3>Монстера Деликатесная</h3>
+            <p class="price">13800 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Фикус Лирата', '20200 тг', 2)">
+            <div class="img-container"><img src="fikus.png" alt="Фикус"></div>
+            <h3>Фикус Лирата</h3>
+            <p class="price">20200 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Стрелиция Николай', '21600 тг', 3)">
+            <div class="img-container"><img src="strelicia.png" alt="Стрелиция"></div>
+            <h3>Стрелиция</h3>
+            <p class="price">21600 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Замиокулькас', '11500 тг', 4)">
+            <div class="img-container"><img src="zamiokulkas.png" alt="Замиокулькас"></div>
+            <h3>Замиокулькас</h3>
+            <p class="price">11500 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Калатея Медальон', '13800 тг', 5)">
+            <div class="img-container"><img src="kaloteya.png" alt="Калатея"></div>
+            <h3>Калатея Медальон</h3>
+            <p class="price">13800 тг</p>
+        </div>
+
+        <div class="product-card" onclick="openPlant('Сансевиерия Зебра', '7699 тг', 6)">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=500&q=80" alt="Сансевиерия"></div>
+            <h3>Сансевиерия Зебра</h3>
+            <p class="price">7699 тг</p>
+        </div>
+    </div>
+</section>
+
+<div id="plantModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="m-name">Название</h2>
+        <p style="margin: 15px 0; color: #636e72;">Прекрасный выбор для вашего интерьера. Это растение очищает воздух и радует глаз своей зеленью.</p>
+        <p id="m-price" class="price" style="font-size: 28px; display: block; margin-bottom: 20px;"></p>
+        <button class="add-to-cart-btn" onclick="addToCart(currentProductId)">Добавить в корзину</button>
+    </div>
+</div>
+
+<footer>
+    <div><h3>PLANTY</h3><p>Превращаем квартиры в джунгли с 2026 года.</p></div>
+    <div><h4>Навигация</h4><p>О нас<br>Доставка<br>Возврат</p></div>
+    <div><h4>Связь</h4><p>Алматы, Азат 15<br> gabidenovali@gmail.com</p></div>
+</footer>
+
+<script>
+    function updateAuthUI() {
+        const authSection = document.getElementById('auth-section');
+        const username = localStorage.getItem('username');
+        if (username) {
+            authSection.innerHTML = `<div style="display: flex; align-items: center; gap: 12px; font-family: sans-serif;"><span style="color: #2D4035; font-size: 14px;">Сәлем, <b style="color: #3e5c4a;">${username}</b>!</span><button onclick="logout()" style="background: #fdfdfd; border: 1px solid #e74c3c; color: #e74c3c; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.3s;" onmouseover="this.style.background='#e74c3c'; this.style.color='white'" onmouseout="this.style.background='#fdfdfd'; this.style.color='#e74c3c'">Шығу</button></div>`;
+        }
+    }
+    updateAuthUI();
+    function logout() { localStorage.clear(); window.location.href = 'register.html'; }
+
+    let currentProductId = null;
+    async function addToCart(productId) {
+        const userEmail = localStorage.getItem('userEmail');
+        const btn = event.target; 
+        const originalText = btn.innerText;
+        if (!userEmail) { alert("Алдымен жүйеге кіріңіз!"); window.location.href = 'login.html'; return; }
+        try {
+            const response = await fetch('/api/cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_email: userEmail, product_id: productId })
+            });
+            if (response.ok) {
+                btn.innerText = "Добавлено! ✓"; btn.style.background = "#27ae60";
+                updateCartCount();
+                setTimeout(() => { btn.innerText = originalText; btn.style.background = "#3e5c4a"; }, 2000);
+            }
+        } catch (error) { console.error("Қате:", error); }
+    }
+
+    async function updateCartCount() {
+        const userEmail = localStorage.getItem('userEmail');
+        if (!userEmail) return;
+        try {
+            const response = await fetch(`/api/cart/count?email=${userEmail}`);
+            const data = await response.json();
+            const cartElement = document.getElementById('cartCount');
+            if (cartElement) { cartElement.innerText = `Корзина (${data.count || 0})`; }
+        } catch (error) { console.error("Санау қатесі:", error); }
+    }
+
+    function openPlant(name, price, id) {
+        currentProductId = id; 
+        document.getElementById('m-name').innerText = name;
+        document.getElementById('m-price').innerText = price;
+        document.getElementById('plantModal').style.display = 'flex';
+    }
+    function closeModal() { document.getElementById('plantModal').style.display = 'none'; }
+
+    function searchProduct() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('product-card');
+
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+            if (title.includes(input)) {
+                cards[i].style.display = ""; 
+            } else {
+                cards[i].style.display = "none"; 
+            }
+        }
+    }
+
+    updateCartCount();
+</script>
+</body>
+</html>

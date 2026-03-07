@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя корзина — Planty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background: #f4f7f6; padding: 40px; margin: 0; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h1 { color: #2D4035; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .cart-item:last-child { border-bottom: none; }
+        .price { font-weight: 600; color: #3e5c4a; font-size: 18px; }
+        .delete-btn { background: none; border: 1px solid #e74c3c; color: #e74c3c; padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .delete-btn:hover { background: #e74c3c; color: white; }
+        .back-link { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #3e5c4a; font-weight: 600; }
+        .empty-msg { text-align: center; color: #999; margin: 40px 0; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-link">← Вернуться в магазин</a>
+    <h1>🛒 Ваша корзина</h1>
+    <div id="cartList">
+        <p class="empty-msg">Загрузка данных...</p>
+    </div>
+</div>
+
+<script>
+    async function loadCart() {
+        const userEmail = localStorage.getItem('userEmail');
+        const cartList = document.getElementById('cartList');
+
+        if (!userEmail) {
+            cartList.innerHTML = '<p class="empty-msg">Жүйеге кіріңіз (Авторизация қажет).</p>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/cart?email=${userEmail}`);
+            if (!response.ok) throw new Error("Сервер қатесі");
+            
+            const items = await response.json();
+
+            if (items.length === 0) {
+                cartList.innerHTML = '<p class="empty-msg">Себетте әзірге ештеңе жоқ 🌿</p>';
+                return;
+            }
+
+            cartList.innerHTML = items.map(item => `
+                <div class="cart-item">
+                    <span style="font-size: 18px;">${item.name}</span>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <span class="price">${item.price}</span>
+                        <button class="delete-btn" onclick="removeFromCart(${item.cart_id})">Өшіру</button>
+                    </div>
+                </div>
+            `).join('');
+
+        } catch (error) {
+            console.error("Жүктеу қатесі:", error);
+            cartList.innerHTML = '<p class="empty-msg" style="color: red;">Деректерді жүктеу мүмкін болмады.</p>';
+        }
+    }
+
+    async function removeFromCart(cartId) {
+        if (!confirm("Бұл тауарды себеттен өшіресіз бе?")) return;
+        
+        try {
+            const response = await fetch(`/api/cart/${cartId}`, { method: 'DELETE' });
+            if (response.ok) {
+                loadCart(); // Тізімді қайта жүктеу (жаңарту)
+            } else {
+                alert("Өшіру кезінде қате кетті.");
+            }
+        } catch (error) {
+            console.error("Өшіру қатесі:", error);
+        }
+    }
+
+    // Бет жүктелгенде себетті көрсету
+    window.onload = loadCart;
+</script>
+
+</body>
+</html>
